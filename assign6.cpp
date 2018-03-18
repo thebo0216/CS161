@@ -1,7 +1,10 @@
 #include <iostream>
 #include <cstring>
+#include <string>
 
 using namespace std;
+
+string startingInput();
 
 int stringToInt(string str) {
   int res = 0;
@@ -58,33 +61,31 @@ int printBoard(char** board, int rows, int cols) {
   }
 }
 
-string startingInput() {
-  string input = "";
-  cout << endl;
-  cout << "EX: 36 means over 3, down 6" << endl;
-  cout << "Please enter the piece that you would like to move: ";
-  getline(cin, input);
-  return input;
-}
-
-string moveInput() {
-  string input = "";
-  cout << endl;
-  cout << "EX: 42 means " << endl;
-  cout << "Please enter the location that you would like to place it: ";
-  getline(cin, input);
-  return input;
-}
-
 string checkStartingPoint(string str) {
-  if(str.length() != 2) {
-    cout << "You did not enter valid input" << endl;
-    return startingInput();
+  int x = str[0] - 48; int y = str[1] - 48;
+  cout << x << y << endl;
+}
+
+string firstInput() {
+  string startingInput = "";
+  while(startingInput.length() != 2) {
+    cout << endl;
+    cout << "EX: 36 means over 3, down 6" << endl;
+    cout << "Please enter the piece that you would like to move: ";
+    getline(cin, startingInput);
   }
-  else {
-    int x = str[0] - 48; int y = str[1] - 48;
-    cout << x << y << endl;
+  return startingInput;
+}
+
+string secondInput() {
+  string moveInput = "";
+  while(moveInput.length() != 2) {
+    cout << endl;
+    cout << "EX: 42 means " << endl;
+    cout << "Please enter the location that you would like to place it: ";
+    getline(cin, moveInput);
   }
+  return moveInput;
 }
 
 void deleteBoard(char** board, int rows) {
@@ -130,8 +131,8 @@ int main(int argc, char** argv) {
   char** board = makeBoard(rows, cols);
   fillBoard(board, rows, cols);
   printBoard(board, rows, cols);
-  string startingPoint = startingInput();
-  string movePoint = moveInput();
-  checkStartingPoint(startingPoint);
+  string startingInput = firstInput();
+  checkStartingPoint(startingInput);
+  string moveInput = secondInput();
   deleteBoard(board, rows);
 }
